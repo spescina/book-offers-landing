@@ -8,385 +8,526 @@
 <meta property="og:title" content="i tuoi libri in offerta">
 <meta property="og:description" content="I libri che aspettavi, nel momento in cui costano meno. Un messaggio al giorno, e silenzio su tutto il resto.">
 <meta property="og:type" content="website">
-<meta name="theme-color" content="#fbf8f3" media="(prefers-color-scheme: light)">
-<meta name="theme-color" content="#14120f" media="(prefers-color-scheme: dark)">
+<meta name="theme-color" content="#f5efe5">
 <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.92em' font-size='88'>📚</text></svg>">
+
 <style>
-  :root {
-    --paper:   #fbf8f3;
-    --raised:  #ffffff;
-    --ink:     #1f1b16;
-    --muted:   #6b6155;
-    --line:    #e7e0d5;
-    --accent:  #8c3a2b;
-    --shadow:  0 18px 45px -28px rgba(31, 27, 22, .55);
-    --serif:   "Iowan Old Style", "Palatino Linotype", Palatino, Georgia, "Times New Roman", serif;
-    --sans:    -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
-  }
+:root{
+  --bg:#f5efe5;
+  --paper:#fffdf8;
+  --ink:#29251f;
+  --muted:#756d62;
+  --line:#ded5c7;
+  --accent:#b4533d;
+  --accent-dark:#873c2e;
+  --sage:#66735d;
+  --yellow:#e8c96a;
+  --telegram:#dcefe8;
+  --serif:"Iowan Old Style","Palatino Linotype",Palatino,Georgia,serif;
+  --sans:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
+  --shadow:0 24px 70px rgba(65,48,32,.12);
+  --radius:28px;
+}
 
-  @media (prefers-color-scheme: dark) {
-    :root {
-      --paper:  #14120f;
-      --raised: #1d1a15;
-      --ink:    #ece6dc;
-      --muted:  #a89c8c;
-      --line:   #2b2620;
-      --accent: #e08e75;
-      --shadow: 0 18px 45px -28px rgba(0, 0, 0, .9);
-    }
-  }
+*{box-sizing:border-box}
+html{scroll-behavior:smooth;-webkit-text-size-adjust:100%}
+body{
+  margin:0;
+  background:var(--bg);
+  color:var(--ink);
+  font-family:var(--sans);
+  font-size:17px;
+  line-height:1.65;
+  -webkit-font-smoothing:antialiased;
+}
+a{color:inherit}
+.wrap{width:min(1120px,calc(100% - 40px));margin:auto}
 
-  * { box-sizing: border-box; }
+h1,h2{
+  font-family:var(--serif);
+  font-weight:600;
+  letter-spacing:-.035em;
+  line-height:1.05;
+  margin:0 0 1rem;
+}
+h1{font-size:clamp(3.25rem,7vw,6.4rem);max-width:850px}
+h2{font-size:clamp(2.15rem,4vw,3.6rem)}
+p{margin:0 0 1.15rem}
+.lede{font-size:clamp(1.08rem,2vw,1.3rem);color:var(--muted);max-width:620px}
 
-  html { -webkit-text-size-adjust: 100%; }
+/* Header */
+.site-header{
+  padding:22px 0;
+}
+.nav{
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:20px;
+}
+.logo{
+  display:flex;
+  align-items:center;
+  gap:10px;
+  text-decoration:none;
+  font-family:var(--serif);
+  font-weight:600;
+  font-size:1.05rem;
+}
+.logo-mark{
+  width:38px;height:38px;
+  display:grid;place-items:center;
+  background:var(--accent);
+  color:#fff;
+  border-radius:12px 12px 12px 4px;
+  font-size:1.05rem;
+  transform:rotate(-3deg);
+}
+.nav-link{
+  font-size:.9rem;
+  color:var(--muted);
+  text-decoration:none;
+}
+.nav-link:hover{color:var(--ink)}
 
-  body {
-    margin: 0;
-    background: var(--paper);
-    color: var(--ink);
-    font-family: var(--sans);
-    font-size: 17px;
-    line-height: 1.65;
-    -webkit-font-smoothing: antialiased;
-  }
+/* Hero */
+.hero{
+  padding:clamp(3.5rem,9vw,8rem) 0 clamp(5rem,10vw,8rem);
+  position:relative;
+  overflow:hidden;
+}
+.hero::before{
+  content:"";
+  position:absolute;
+  width:480px;height:480px;
+  border-radius:50%;
+  background:rgba(232,201,106,.19);
+  right:-180px;top:-120px;
+  pointer-events:none;
+}
+.hero-grid{
+  display:grid;
+  grid-template-columns:minmax(0,1.05fr) minmax(330px,.75fr);
+  gap:clamp(3rem,8vw,7rem);
+  align-items:center;
+  position:relative;
+}
+.eyebrow{
+  display:inline-flex;
+  align-items:center;
+  gap:9px;
+  margin:0 0 1.7rem;
+  font-size:.82rem;
+  font-weight:700;
+  letter-spacing:.09em;
+  text-transform:uppercase;
+  color:var(--accent-dark);
+}
+.eyebrow::before{
+  content:"";
+  width:26px;height:2px;
+  background:var(--accent);
+}
+.hero h1 em{font-style:normal;color:var(--accent)}
+.hero-copy .lede{margin-top:1.6rem}
+.hero-actions{margin-top:2rem}
 
-  .wrap {
-    width: 100%;
-    max-width: 1040px;
-    margin: 0 auto;
-    padding: 0 24px;
-  }
+/* CTA */
+.actions,.hero-actions{display:flex;flex-wrap:wrap;gap:12px}
+.btn{
+  display:inline-flex;
+  align-items:center;
+  justify-content:center;
+  min-height:50px;
+  padding:0 22px;
+  border-radius:999px;
+  text-decoration:none;
+  font-size:.95rem;
+  font-weight:700;
+  transition:transform .2s ease,box-shadow .2s ease,background .2s ease;
+}
+.btn:hover{transform:translateY(-2px)}
+.btn-primary{
+  background:var(--accent);
+  color:white;
+  box-shadow:0 10px 25px rgba(180,83,61,.22);
+}
+.btn-primary:hover{background:var(--accent-dark);box-shadow:0 14px 30px rgba(180,83,61,.25)}
+.btn-ghost{
+  border:1px solid var(--line);
+  background:rgba(255,253,248,.55);
+}
+.btn-ghost:hover{background:var(--paper)}
 
-  h1, h2 {
-    font-family: var(--serif);
-    font-weight: 600;
-    letter-spacing: -0.01em;
-    line-height: 1.15;
-    margin: 0 0 .6rem;
-  }
+/* Telegram mockup */
+.phone-wrap{position:relative}
+.phone-wrap::before{
+  content:"";
+  position:absolute;
+  width:90px;height:90px;
+  background:var(--yellow);
+  border-radius:50%;
+  left:-28px;top:-30px;
+  opacity:.7;
+}
+.phone{
+  position:relative;
+  width:min(100%,390px);
+  margin:auto;
+  background:var(--paper);
+  border:1px solid rgba(41,37,31,.08);
+  border-radius:30px;
+  box-shadow:var(--shadow);
+  overflow:hidden;
+  transform:rotate(1.5deg);
+}
+.phone-top{
+  padding:14px 18px;
+  display:flex;
+  align-items:center;
+  gap:11px;
+  background:rgba(255,255,255,.65);
+  border-bottom:1px solid var(--line);
+}
+.avatar{
+  width:40px;height:40px;
+  display:grid;place-items:center;
+  border-radius:50%;
+  background:var(--accent);
+  color:white;
+  font-size:1.1rem;
+}
+.who{font-weight:700;font-size:.92rem;line-height:1.2}
+.when{font-size:.75rem;color:var(--muted)}
+.msg{
+  margin:18px;
+  padding:18px 18px 14px;
+  background:var(--telegram);
+  border-radius:19px 19px 5px 19px;
+  font-size:.86rem;
+  line-height:1.5;
+  position:relative;
+}
+.msg::after{
+  content:"";
+  position:absolute;
+  right:-1px;bottom:-8px;
+  width:16px;height:16px;
+  background:var(--telegram);
+  clip-path:polygon(0 0,100% 0,100% 100%);
+}
+.msg-head{font-weight:800;margin:0 0 2px}
+.msg-date{font-size:.78rem;color:var(--muted);font-style:italic;margin-bottom:14px}
+.deal{padding:12px 0;border-top:1px solid rgba(41,37,31,.09);margin:0}
+.deal .title{display:block;font-weight:700}
+.deal .by{display:block;color:var(--muted);font-size:.8rem}
+.prices{display:block;margin-top:3px}
+.now{font-weight:800}
+.was{text-decoration:line-through;color:var(--muted);margin-left:3px}
+.off{font-weight:800;color:var(--accent)}
+.shop{color:var(--muted)}
+.msg-sub{font-weight:800;margin:15px 0 7px}
+.group-author{font-weight:700;margin:0 0 2px}
 
-  h1 { font-size: clamp(2.1rem, 6vw, 3.3rem); }
-  h2 { font-size: clamp(1.5rem, 3.6vw, 2.05rem); }
+/* Intro strip */
+.statement{
+  background:var(--ink);
+  color:#f8f2e8;
+  padding:clamp(4rem,9vw,7rem) 0;
+}
+.statement-grid{
+  display:grid;
+  grid-template-columns:1fr 1.25fr;
+  gap:clamp(2rem,7vw,7rem);
+  align-items:end;
+}
+.statement h2{max-width:530px}
+.statement p{color:#c8bfb1;max-width:620px;font-size:1.08rem}
 
-  p { margin: 0 0 1.1rem; }
+/* Feature sections */
+.section{
+  padding:clamp(5rem,10vw,9rem) 0;
+}
+.section.alt{background:var(--paper)}
+.section-grid{
+  display:grid;
+  grid-template-columns:.7fr 1fr;
+  gap:clamp(3rem,9vw,9rem);
+}
+.section-label{
+  font-size:.78rem;
+  font-weight:800;
+  text-transform:uppercase;
+  letter-spacing:.12em;
+  color:var(--accent);
+  margin-bottom:1.4rem;
+}
+.section h2{max-width:720px}
+.section p{max-width:680px;color:var(--muted);font-size:1.08rem}
 
-  .lede {
-    font-size: 1.16rem;
-    color: var(--muted);
-    max-width: 30rem;
-  }
+/* Cards */
+.features{
+  display:grid;
+  grid-template-columns:repeat(2,1fr);
+  gap:1px;
+  background:var(--line);
+  border:1px solid var(--line);
+  border-radius:var(--radius);
+  overflow:hidden;
+  margin-top:2rem;
+}
+.feature{
+  background:var(--paper);
+  padding:clamp(2rem,4vw,3.3rem);
+}
+.feature:first-child{background:#faf4e8}
+.feature-icon{
+  width:48px;height:48px;
+  display:grid;place-items:center;
+  border-radius:15px;
+  background:var(--bg);
+  margin-bottom:1.6rem;
+  font-size:1.25rem;
+}
+.feature h2{font-size:clamp(1.8rem,3vw,2.7rem)}
+.feature p{font-size:1rem;margin-bottom:0}
 
-  /* ---------- apertura ---------- */
+/* Preferences */
+.preferences{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:2rem;
+  margin-top:3rem;
+}
+.preference{
+  border:1px solid var(--line);
+  border-radius:22px;
+  padding:1.8rem;
+  background:rgba(255,253,248,.5);
+  color:var(--muted);
+  font-size:1rem;
+}
+.preference strong{
+  display:block;
+  font-family:var(--serif);
+  font-size:1.35rem;
+  color:var(--ink);
+  margin-bottom:.5rem;
+}
 
-  .hero {
-    padding: clamp(3rem, 9vw, 6rem) 0 clamp(2.5rem, 7vw, 4.5rem);
-  }
+/* Closing */
+.closing{
+  background:var(--accent);
+  color:white;
+  text-align:center;
+  padding:clamp(5rem,11vw,9rem) 0;
+  position:relative;
+  overflow:hidden;
+}
+.closing::before,.closing::after{
+  content:"";
+  position:absolute;
+  border:1px solid rgba(255,255,255,.2);
+  border-radius:50%;
+}
+.closing::before{width:420px;height:420px;left:-230px;top:-180px}
+.closing::after{width:320px;height:320px;right:-160px;bottom:-180px}
+.closing .wrap{position:relative;z-index:1}
+.closing h2{font-size:clamp(2.7rem,6vw,5.3rem);max-width:800px;margin:0 auto 1.2rem}
+.closing p{max-width:620px;margin:0 auto;color:rgba(255,255,255,.78);font-size:1.08rem}
+.closing .actions{justify-content:center;margin-top:2rem}
+.closing .btn-primary{background:white;color:var(--accent);box-shadow:none}
+.closing .btn-primary:hover{background:#fff7ec}
+.closing .btn-ghost{border-color:rgba(255,255,255,.35);color:white;background:transparent}
+.note{margin-top:1.4rem!important;font-size:.9rem!important;color:rgba(255,255,255,.62)!important}
 
-  .hero .wrap {
-    display: grid;
-    gap: clamp(2.5rem, 6vw, 4rem);
-    grid-template-columns: 1fr;
-    align-items: center;
-  }
+/* Footer */
+footer{
+  padding:2.5rem 0 3.5rem;
+  background:var(--paper);
+  color:var(--muted);
+  font-size:.82rem;
+  text-align:center;
+}
+footer p{margin:0}
 
-  @media (min-width: 860px) {
-    .hero .wrap { grid-template-columns: 1.05fr .95fr; }
-  }
-
-  .brand {
-    font-family: var(--serif);
-    font-size: 1rem;
-    font-style: italic;
-    color: var(--accent);
-    margin: 0 0 1.6rem;
-  }
-
-  .brand::before {
-    content: "📚";
-    font-style: normal;
-    margin-right: .5rem;
-  }
-
-  /* ---------- il messaggio ---------- */
-
-  .phone {
-    background: var(--raised);
-    border: 1px solid var(--line);
-    border-radius: 20px;
-    box-shadow: var(--shadow);
-    overflow: hidden;
-    max-width: 27rem;
-    width: 100%;
-    margin: 0 auto;
-  }
-
-  .phone-bar {
-    display: flex;
-    align-items: center;
-    gap: .7rem;
-    padding: .85rem 1.1rem;
-    border-bottom: 1px solid var(--line);
-  }
-
-  .phone-bar .avatar {
-    width: 34px;
-    height: 34px;
-    border-radius: 50%;
-    display: grid;
-    place-items: center;
-    background: var(--paper);
-    border: 1px solid var(--line);
-    font-size: 1rem;
-  }
-
-  .phone-bar .who {
-    font-family: var(--serif);
-    font-size: .97rem;
-  }
-
-  .phone-bar .when {
-    font-size: .78rem;
-    color: var(--muted);
-  }
-
-  .msg {
-    padding: 1.1rem 1.2rem 1.4rem;
-    font-size: .93rem;
-    line-height: 1.55;
-  }
-
-  .msg-head {
-    font-weight: 700;
-    margin-bottom: .1rem;
-  }
-
-  .msg-date {
-    color: var(--muted);
-    font-style: italic;
-    font-size: .85rem;
-    margin-bottom: 1.1rem;
-  }
-
-  .deal { margin-bottom: 1.05rem; }
-
-  .deal .title { display: block; }
-
-  .deal .by,
-  .deal .prices {
-    display: block;
-    padding-left: 1.45rem;
-  }
-
-  .deal .by { color: var(--muted); }
-
-  .now { font-weight: 700; }
-
-  .was {
-    text-decoration: line-through;
-    color: var(--muted);
-    margin-left: .25rem;
-  }
-
-  .off { color: var(--accent); }
-
-  .shop { color: var(--muted); }
-
-  .msg-sub {
-    font-weight: 700;
-    margin: 1.4rem 0 .8rem;
-  }
-
-  .group-author {
-    font-weight: 700;
-    margin-bottom: .35rem;
-  }
-
-  /* ---------- sezioni ---------- */
-
-  section { padding: clamp(2.6rem, 7vw, 4.2rem) 0; }
-
-  section + section { border-top: 1px solid var(--line); }
-
-  .prose > * { max-width: 34rem; }
-
-  .prose > p:last-child { margin-bottom: 0; }
-
-  .pair {
-    display: grid;
-    gap: clamp(2rem, 5vw, 3.5rem);
-    grid-template-columns: 1fr;
-  }
-
-  @media (min-width: 760px) {
-    .pair { grid-template-columns: 1fr 1fr; }
-  }
-
-  .pair p:last-child { margin-bottom: 0; }
-
-  /* ---------- chiusura ---------- */
-
-  .closing { text-align: center; }
-
-  .closing .prose {
-    margin: 0 auto;
-    max-width: 32rem;
-  }
-
-  .actions {
-    display: flex;
-    flex-wrap: wrap;
-    gap: .8rem;
-    justify-content: center;
-    margin: 1.8rem 0 1.3rem;
-  }
-
-  .btn {
-    display: inline-block;
-    padding: .8rem 1.5rem;
-    border-radius: 999px;
-    text-decoration: none;
-    font-weight: 600;
-    font-size: .97rem;
-    border: 1px solid var(--accent);
-    transition: transform .15s ease, opacity .15s ease;
-  }
-
-  .btn:hover { transform: translateY(-1px); opacity: .92; }
-
-  .btn-primary { background: var(--accent); color: var(--paper); }
-
-  .btn-ghost { color: var(--accent); }
-
-  .hero .btn { margin-top: 1.4rem; }
-
-  .note {
-    color: var(--muted);
-    font-size: .92rem;
-    margin: 0;
-  }
-
-  footer {
-    border-top: 1px solid var(--line);
-    padding: 2rem 0 3rem;
-    color: var(--muted);
-    font-size: .84rem;
-    text-align: center;
-  }
-
-  footer p { margin: 0; }
+/* Responsive */
+@media(max-width:850px){
+  .hero-grid,.statement-grid,.section-grid{grid-template-columns:1fr}
+  .hero-grid{gap:4rem}
+  .statement-grid{gap:2rem}
+  .section-grid{gap:2.5rem}
+  .phone{transform:none}
+}
+@media(max-width:640px){
+  .wrap{width:min(100% - 28px,1120px)}
+  .site-header{padding:16px 0}
+  .nav-link{display:none}
+  .hero{padding-top:3.2rem}
+  .hero h1{font-size:clamp(3rem,15vw,4.2rem)}
+  .actions,.hero-actions{flex-direction:column;align-items:stretch}
+  .btn{width:100%}
+  .features,.preferences{grid-template-columns:1fr}
+  .features{gap:1px}
+  .phone-wrap{padding:0 8px}
+  .msg{margin:13px;padding:15px}
+}
+@media(prefers-reduced-motion:reduce){
+  html{scroll-behavior:auto}
+  .btn{transition:none}
+}
 </style>
 </head>
+
 <body>
 
-<header class="hero">
-  <div class="wrap">
-    <div>
-      <p class="brand">i tuoi libri in offerta</p>
-      <h1>I libri che aspettavi, nel momento in cui costano meno.</h1>
-      <p class="lede">Le occasioni che riguardano le autrici e gli autori che ami,
-        raccolte una volta al giorno e portate dove già leggi.</p>
-      <a class="btn btn-primary" href="https://t.me/book_offers_bot">Apri la chat su Telegram</a>
-    </div>
-
-    <div class="phone" aria-label="Esempio del messaggio giornaliero">
-      <div class="phone-bar">
-        <span class="avatar" aria-hidden="true">📚</span>
-        <span>
-          <span class="who">i tuoi libri in offerta</span><br>
-          <span class="when">oggi, 8:30</span>
-        </span>
-      </div>
-      <div class="msg">
-        <p class="msg-head">⭐ Le migliori offerte di oggi</p>
-        <p class="msg-date">17 agosto</p>
-
-        <p class="deal">
-          <span class="title">📖 Delitto e castigo. Ediz. integrale</span>
-          <span class="by">Fëdor Dostoevskij</span>
-          <span class="prices"><span class="now">6,60 €</span> <span class="was">13,20 €</span>
-            <span class="off">· -50%</span> <span class="shop">· ibs</span></span>
-        </p>
-
-        <p class="deal">
-          <span class="title">📖 Il libro dell'inquietudine</span>
-          <span class="by">Fernando Pessoa</span>
-          <span class="prices"><span class="now">8,50 €</span> <span class="was">17,00 €</span>
-            <span class="off">· -50%</span> <span class="shop">· Libraccio</span></span>
-        </p>
-
-        <p class="deal">
-          <span class="title">📖 Suttree</span>
-          <span class="by">Cormac McCarthy</span>
-          <span class="prices"><span class="now">7,15 €</span> <span class="was">13,00 €</span>
-            <span class="off">· -45%</span> <span class="shop">· ibs</span></span>
-        </p>
-
-        <p class="msg-sub">📚 Altre offerte di oggi</p>
-
-        <p class="group-author">Andrea Camilleri</p>
-        <p class="deal">
-          <span class="title">📖 Il birraio di Preston</span>
-          <span class="prices"><span class="now">5,50 €</span> <span class="was">10,00 €</span>
-            <span class="off">· -45%</span> <span class="shop">· ibs</span></span>
-        </p>
-      </div>
-    </div>
+<header class="site-header">
+  <div class="wrap nav">
+    <a class="logo" href="#">
+      <span class="logo-mark">📚</span>
+      <span>i tuoi libri in offerta</span>
+    </a>
+    <a class="nav-link" href="https://www.instagram.com/yourbookoffers/">Segui i lavori su Instagram</a>
   </div>
 </header>
 
 <main>
-  <section>
-    <div class="wrap"><div class="prose">
-      <h2>Le occasioni ci sono. Trovarle è un'altra cosa.</h2>
-      <p>Stanno sparse fra decine di migliaia di titoli che cambiano di giorno in
-        giorno, e non aspettano nessuno: quando ci passi davanti, il libro che
-        cercavi è già tornato nello scaffale. Controllare ogni sera non è un
-        piacere, è un secondo lavoro.</p>
-    </div></div>
-  </section>
 
-  <section>
-    <div class="wrap pair">
-      <div>
+<section class="hero">
+  <div class="wrap hero-grid">
+    <div class="hero-copy">
+      <p class="eyebrow">i tuoi libri in offerta</p>
+      <h1>I libri che aspettavi, nel momento in cui <em>costano meno.</em></h1>
+      <p class="lede">Le occasioni che riguardano le autrici e gli autori che ami,
+        raccolte una volta al giorno e portate dove già leggi.</p>
+      <div class="hero-actions">
+        <a class="btn btn-primary" href="https://t.me/book_offers_bot">Apri la chat su Telegram</a>
+      </div>
+    </div>
+
+    <div class="phone-wrap">
+      <div class="phone" aria-label="Esempio del messaggio giornaliero">
+        <div class="phone-top">
+          <span class="avatar" aria-hidden="true">📚</span>
+          <span>
+            <span class="who">i tuoi libri in offerta</span><br>
+            <span class="when">oggi, 8:30</span>
+          </span>
+        </div>
+        <div class="msg">
+          <p class="msg-head">⭐ Le migliori offerte di oggi</p>
+          <p class="msg-date">17 agosto</p>
+
+          <p class="deal">
+            <span class="title">📖 Delitto e castigo. Ediz. integrale</span>
+            <span class="by">Fëdor Dostoevskij</span>
+            <span class="prices"><span class="now">6,60 €</span> <span class="was">13,20 €</span>
+              <span class="off">· -50%</span> <span class="shop">· ibs</span></span>
+          </p>
+
+          <p class="deal">
+            <span class="title">📖 Il libro dell'inquietudine</span>
+            <span class="by">Fernando Pessoa</span>
+            <span class="prices"><span class="now">8,50 €</span> <span class="was">17,00 €</span>
+              <span class="off">· -50%</span> <span class="shop">· Libraccio</span></span>
+          </p>
+
+          <p class="deal">
+            <span class="title">📖 Suttree</span>
+            <span class="by">Cormac McCarthy</span>
+            <span class="prices"><span class="now">7,15 €</span> <span class="was">13,00 €</span>
+              <span class="off">· -45%</span> <span class="shop">· ibs</span></span>
+          </p>
+
+          <p class="msg-sub">📚 Altre offerte di oggi</p>
+
+          <p class="group-author">Andrea Camilleri</p>
+          <p class="deal">
+            <span class="title">📖 Il birraio di Preston</span>
+            <span class="prices"><span class="now">5,50 €</span> <span class="was">10,00 €</span>
+              <span class="off">· -45%</span> <span class="shop">· ibs</span></span>
+          </p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="statement">
+  <div class="wrap statement-grid">
+    <h2>Le occasioni ci sono. Trovarle è un'altra cosa.</h2>
+    <p>Stanno sparse fra decine di migliaia di titoli che cambiano di giorno in
+      giorno, e non aspettano nessuno: quando ci passi davanti, il libro che
+      cercavi è già tornato nello scaffale. Controllare ogni sera non è un
+      piacere, è un secondo lavoro.</p>
+  </div>
+</section>
+
+<section class="section alt">
+  <div class="wrap">
+    <p class="section-label">Come funziona</p>
+
+    <div class="features">
+      <article class="feature">
+        <div class="feature-icon">☀️</div>
         <h2>Un messaggio, una volta al giorno.</h2>
         <p>In cima le occasioni che valgono di più, sotto tutte le altre, in
           ordine. Si legge in un minuto, mentre aspetti il caffè. Nei giorni in
           cui non c'è niente per te, non arriva niente.</p>
-      </div>
-      <div>
+      </article>
+
+      <article class="feature">
+        <div class="feature-icon">🔕</div>
         <h2>E soprattutto: silenzio sul resto.</h2>
         <p>I libri che hai già non tornano a bussare. Le cifre fuori dalla tua
           portata restano fuori. Lo stesso titolo non ti insegue ogni mattina. Un
           avviso che si ripete diventa rumore, e il rumore si smette di leggere.</p>
-      </div>
+      </article>
     </div>
-  </section>
+  </div>
+</section>
 
-  <section>
-    <div class="wrap"><div class="prose">
+<section class="section">
+  <div class="wrap section-grid">
+    <div>
+      <p class="section-label">Tu scegli</p>
+    </div>
+    <div>
       <h2>Decidi tu di chi mi devo ricordare.</h2>
-      <p>Basta dirmi chi vuoi tenere d'occhio, e ogni tanto ti proporrò qualcuno
-        che gli somiglia. Puoi dire quanto deve essere interessante un'offerta
-        perché valga la pena disturbarti, e quali libri hai già in casa. Tutto
-        dentro una conversazione: niente account, niente app da installare.</p>
-    </div></div>
-  </section>
+      <p>Tutto dentro una conversazione: niente account, niente app da installare.</p>
 
-  <section class="closing">
-    <div class="wrap">
-      <div class="prose">
-        <h2>Si comincia da qui.</h2>
-        <p>Vive dentro una conversazione, quindi non c'è niente da installare:
-          apri la chat, dimmi chi vuoi tenere d'occhio, e il primo messaggio
-          arriva da solo.</p>
+      <div class="preferences">
+        <div class="preference">
+          <strong>Autrici e autori</strong>
+          Basta dirmi chi vuoi tenere d'occhio, e ogni tanto ti proporrò qualcuno
+          che gli somiglia.
+        </div>
+        <div class="preference">
+          <strong>Le tue regole</strong>
+          Puoi dire quanto deve essere interessante un'offerta perché valga la
+          pena disturbarti, e quali libri hai già in casa.
+        </div>
       </div>
-      <div class="actions">
-        <a class="btn btn-primary" href="https://t.me/book_offers_bot">Apri la chat su Telegram</a>
-        <a class="btn btn-ghost" href="https://www.instagram.com/yourbookoffers/">Segui i lavori su Instagram</a>
-      </div>
-      <p class="note">È un progetto piccolo, fatto a mano, ancora in costruzione.</p>
     </div>
-  </section>
+  </div>
+</section>
+
+<section class="closing">
+  <div class="wrap">
+    <h2>Si comincia da qui.</h2>
+    <p>Vive dentro una conversazione, quindi non c'è niente da installare:
+      apri la chat, dimmi chi vuoi tenere d'occhio, e il primo messaggio
+      arriva da solo.</p>
+
+    <div class="actions">
+      <a class="btn btn-primary" href="https://t.me/book_offers_bot">Apri la chat su Telegram</a>
+      <a class="btn btn-ghost" href="https://www.instagram.com/yourbookoffers/">Segui i lavori su Instagram</a>
+    </div>
+
+    <p class="note">È un progetto piccolo, fatto a mano, ancora in costruzione.</p>
+  </div>
+</section>
+
 </main>
 
 <footer>
