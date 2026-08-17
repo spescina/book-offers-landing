@@ -11,6 +11,55 @@
 <meta name="theme-color" content="#f5efe5">
 <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.92em' font-size='88'>📚</text></svg>">
 
+<!-- Analytics: Consent Mode v2. I segnali partono negati e il tag di Google non
+     viene nemmeno caricato finché non c'è un «Va bene» sul banner in fondo alla
+     pagina: chi rifiuta non manda niente a Google, nemmeno un ping cookieless. -->
+<script>
+window.dataLayer = window.dataLayer || [];
+function gtag(){dataLayer.push(arguments)}
+
+// Va dichiarato prima del tag, altrimenti non ha effetto. Solo
+// `analytics_storage` potrà passare a granted: qui non si fa advertising.
+gtag('consent', 'default', {
+  ad_storage: 'denied',
+  ad_user_data: 'denied',
+  ad_personalization: 'denied',
+  analytics_storage: 'denied'
+});
+
+var MISURAZIONE = 'G-N8RNBPJJZC';
+var CHIAVE_CONSENSO = 'consenso-analytics';
+var analyticsAttivo = false;
+
+// La scelta sta in localStorage, non in un cookie: ricordare un rifiuto
+// scrivendo un cookie sarebbe la contraddizione più banale possibile.
+// Safari in navigazione privata può lanciare, quindi si legge protetti.
+function consensoSalvato(){
+  try { return localStorage.getItem(CHIAVE_CONSENSO); } catch (e) { return null; }
+}
+
+function abilitaAnalytics(){
+  if (analyticsAttivo) return;
+  analyticsAttivo = true;
+  gtag('consent', 'update', { analytics_storage: 'granted' });
+  gtag('js', new Date());
+  gtag('config', MISURAZIONE);
+  var tag = document.createElement('script');
+  tag.async = true;
+  tag.src = 'https://www.googletagmanager.com/gtag/js?id=' + MISURAZIONE;
+  document.head.appendChild(tag);
+}
+
+// Senza consenso è un no-op. Spingere l'evento nel dataLayer comunque
+// significherebbe mandarlo a Google appena il tag si carica: eventi raccolti
+// prima del sì.
+function track(nome, parametri){
+  if (analyticsAttivo) gtag('event', nome, parametri);
+}
+
+if (consensoSalvato() === 'ok') abilitaAnalytics();
+</script>
+
 <style>
 :root{
   --bg:#f5efe5;
@@ -351,6 +400,54 @@ footer{
 }
 footer p{margin:0}
 
+/* Banner consenso */
+.consent{
+  position:fixed;
+  left:50%;
+  bottom:16px;
+  transform:translateX(-50%);
+  z-index:50;
+  width:min(760px,calc(100% - 32px));
+  display:flex;
+  flex-wrap:wrap;
+  align-items:center;
+  gap:12px;
+  padding:16px 20px;
+  background:var(--paper);
+  border:1px solid var(--line);
+  border-radius:20px;
+  box-shadow:var(--shadow);
+  font-size:.88rem;
+  color:var(--muted);
+  text-align:left;
+}
+/* Senza questa riga `display:flex` vince sull'attributo `hidden` e la barra
+   resta in pagina dopo la scelta. */
+.consent[hidden]{display:none}
+.consent p{margin:0;flex:1 1 300px}
+.consent .btn{
+  font:inherit;
+  font-weight:700;
+  font-size:.85rem;
+  min-height:42px;
+  cursor:pointer;
+  width:auto; /* annulla .btn{width:100%} del breakpoint a 640px */
+}
+/* .btn-primary non dichiara un bordo: su un <button> comparirebbe quello di
+   default del browser. */
+.consent .btn-primary{border:1px solid var(--accent)}
+
+.footer-consent{margin-top:.6rem}
+.linkish{
+  background:none;
+  border:0;
+  padding:0;
+  font:inherit;
+  color:inherit;
+  text-decoration:underline;
+  cursor:pointer;
+}
+
 /* Responsive */
 @media(max-width:850px){
   .hero-grid,.statement-grid,.section-grid{grid-template-columns:1fr}
@@ -371,6 +468,11 @@ footer p{margin:0}
   .features{gap:1px}
   .phone-wrap{padding:0 8px}
   .msg{margin:13px;padding:15px}
+  .consent{flex-direction:column;align-items:stretch;text-align:center;bottom:12px}
+  /* In colonna il flex-basis diventa un'altezza: senza questa riga il
+     paragrafo si prende 300px di alto e la barra copre mezza pagina. */
+  .consent p{flex:0 1 auto}
+  .consent .btn{width:100%}
 }
 @media(prefers-reduced-motion:reduce){
   html{scroll-behavior:auto}
@@ -387,7 +489,7 @@ footer p{margin:0}
       <span class="logo-mark">📚</span>
       <span>i tuoi libri in offerta</span>
     </a>
-    <a class="nav-link" href="https://www.instagram.com/yourbookoffers/">Segui i lavori su Instagram</a>
+    <a class="nav-link" data-cta="instagram-header" href="https://www.instagram.com/yourbookoffers/">Segui i lavori su Instagram</a>
   </div>
 </header>
 
@@ -401,7 +503,7 @@ footer p{margin:0}
       <p class="lede">Le occasioni che riguardano le autrici e gli autori che ami,
         raccolte una volta al giorno e portate dove già leggi.</p>
       <div class="hero-actions">
-        <a class="btn btn-primary" href="https://t.me/book_offers_bot">Apri la chat su Telegram</a>
+        <a class="btn btn-primary" data-cta="telegram-hero" href="https://t.me/book_offers_bot">Apri la chat su Telegram</a>
       </div>
     </div>
 
@@ -520,8 +622,8 @@ footer p{margin:0}
       arriva da solo.</p>
 
     <div class="actions">
-      <a class="btn btn-primary" href="https://t.me/book_offers_bot">Apri la chat su Telegram</a>
-      <a class="btn btn-ghost" href="https://www.instagram.com/yourbookoffers/">Segui i lavori su Instagram</a>
+      <a class="btn btn-primary" data-cta="telegram-closing" href="https://t.me/book_offers_bot">Apri la chat su Telegram</a>
+      <a class="btn btn-ghost" data-cta="instagram-closing" href="https://www.instagram.com/yourbookoffers/">Segui i lavori su Instagram</a>
     </div>
 
     <p class="note">È un progetto piccolo, fatto a mano, ancora in costruzione.</p>
@@ -533,8 +635,63 @@ footer p{margin:0}
 <footer>
   <div class="wrap">
     <p>I titoli e i prezzi qui sopra servono solo a mostrare com'è fatto il messaggio.</p>
+    <p class="footer-consent">Conto le visite con Google Analytics, solo se sei d'accordo.
+      <button type="button" class="linkish" id="consent-reset">Cambia la tua scelta</button></p>
   </div>
 </footer>
+
+<!-- Compare finché non c'è una scelta. Finché sta qui, Google non è mai stato
+     contattato: il tag si carica solo dal ramo «Va bene». -->
+<div class="consent" id="consent" role="region" aria-live="polite"
+     aria-label="Consenso alle statistiche" hidden>
+  <p>Uso Google Analytics per contare le visite. Serve un cookie, quindi decidi tu.</p>
+  <button type="button" class="btn btn-ghost" data-consent="no">Rifiuta</button>
+  <button type="button" class="btn btn-primary" data-consent="ok">Va bene</button>
+</div>
+
+<script>
+(function(){
+  var barra = document.getElementById('consent');
+
+  function ricorda(scelta){
+    try { localStorage.setItem(CHIAVE_CONSENSO, scelta); } catch (e) {}
+  }
+
+  function dimentica(){
+    try { localStorage.removeItem(CHIAVE_CONSENSO); } catch (e) {}
+  }
+
+  function risalta(evento, selettore){
+    var partenza = evento.target;
+    return partenza && partenza.closest ? partenza.closest(selettore) : null;
+  }
+
+  if (!consensoSalvato()) barra.hidden = false;
+
+  barra.addEventListener('click', function(evento){
+    var bottone = risalta(evento, '[data-consent]');
+    if (!bottone) return;
+    var scelta = bottone.getAttribute('data-consent');
+    ricorda(scelta);
+    barra.hidden = true;
+    // Il pageview parte da qui: nessun reload da chiedere a chi ha appena detto sì.
+    if (scelta === 'ok') abilitaAnalytics();
+  });
+
+  document.getElementById('consent-reset').addEventListener('click', function(){
+    dimentica();
+    barra.hidden = false;
+  });
+
+  // GA4 traccia già gli outbound click da solo, ma li aggrega per URL: i due
+  // bottoni Telegram diventerebbero una riga sola. Questo evento porta la posizione.
+  document.addEventListener('click', function(evento){
+    var link = risalta(evento, '[data-cta]');
+    if (!link) return;
+    track('cta_click', { cta: link.getAttribute('data-cta'), link_url: link.href });
+  });
+})();
+</script>
 
 </body>
 </html>
