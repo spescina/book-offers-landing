@@ -693,5 +693,20 @@ footer p{margin:0}
 })();
 </script>
 
+<!-- TradeTracker SuperTag: serve a TradeTracker per verificare la proprietà del
+     dominio. È l'unica terza parte in pagina oltre a Google, e a differenza di
+     Google si carica sempre: la verifica pretende che il tag ci sia. -->
+<script type="text/javascript">
+var _TradeTrackerTagOptions = {
+    t: 'a',
+    s: '514630',
+    chk: 'b747ac8890b90bcd00138c21a4cc2d8b',
+    overrideOptions: {}
+};
+
+(function() {var tt = document.createElement('script'), s = document.getElementsByTagName('script')[0]; tt.setAttribute('type', 'text/javascript'); tt.setAttribute('src', (document.location.protocol == 'https:' ? 'https' : 'http') + '://tm.tradetracker.net/tag?t=' + _TradeTrackerTagOptions.t + '&s=' + _TradeTrackerTagOptions.s + '&chk=' + _TradeTrackerTagOptions.chk); s.parentNode.insertBefore(tt, s);})();
+</script>
+<!-- End TradeTracker SuperTag Code -->
+
 </body>
 </html>
